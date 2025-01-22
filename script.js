@@ -1,6 +1,6 @@
 var sidebarOpen = false;
 var sidebar = document.getElementById("sidebar");
-
+var openMenu = document.getElementById("openMenu");
 function openSidebar() {
     if (!sidebarOpen) {
         sidebar.classList.add("sidebar-responsive");
@@ -10,10 +10,20 @@ function openSidebar() {
 
 function closeSidebar() {
     if (sidebarOpen) {
+        console.log("Closing the sidebar...");
         sidebar.classList.remove("sidebar-responsive");
         sidebarOpen = false;
     }
 }
+
+document.addEventListener('click', function (event) {
+    if (!sidebar.contains(event.target) && !openMenu.contains(event.target)) {
+        console.log("Clicked outside of the sidebar.");
+        sidebar.classList.remove("sidebar-responsive");
+        sidebarOpen = false;
+    }
+    console.log("Click event takes place...");
+});
 
 
 // -------------- CHARTS -----------------
