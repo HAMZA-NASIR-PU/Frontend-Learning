@@ -17,7 +17,7 @@ function closeSidebar() {
 }
 
 document.addEventListener('click', function (event) {
-    if (!sidebar.contains(event.target) && !openMenu.contains(event.target)) {
+    if (!sidebar.contains(event.target) && !openMenu.contains(event.target) || event.target.classList.contains('sidebar-list-item')) {
         console.log("Clicked outside of the sidebar.");
         sidebar.classList.remove("sidebar-responsive");
         sidebarOpen = false;
@@ -126,3 +126,16 @@ var areaChart = new ApexCharts(document.querySelector("#area-chart"), areaChartO
 areaChart.render();
 
 
+
+const profileMenu = document.getElementById('profileMenu');
+const profileBtn = document.getElementById('profileBtn');
+
+document.addEventListener('click', function (event) {
+
+    if (event.target.id === 'profileBtn') {
+        profileMenu.classList.toggle('open-menu');
+    }
+    else if (!profileMenu.contains(event.target)) {
+        profileMenu.classList.remove('open-menu');
+    }
+});
