@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+    <title>Dynamic Dropdowns</title>
+</head>
+
+<body>
+
+    <div id="dropdown-container"></div>
+
+    <script>
+        const dropdownData = [
+            {
+                title: 'Dropdown 1',
+                actions: ['Action 1', 'Action 2', 'Action 3']
+            },
+            {
+                title: 'Dropdown 2',
+                actions: ['Action 4', 'Action 5', 'Action 6']
+            },
+            {
+                title: 'Dropdown 3',
+                actions: ['Action 7', 'Action 8', 'Action 9']
+            }
+        ];
+
+        const container = document.getElementById('dropdown-container');
+
+        dropdownData.forEach((dropdown, index) => {
+            // Create dropdown element
+            const dropdownDiv = document.createElement('div');
+            dropdownDiv.className = 'dropdown';
+
+            // Create button element
+            const button = document.createElement('button');
+            button.innerText = dropdown.title;
+            button.onclick = () => toggleDropdown(`dropdown${index}`);
+
+            // Create dropdown content div
+            const dropdownContent = document.createElement('div');
+            dropdownContent.id = `dropdown${index}`;
+            dropdownContent.className = 'dropdown-content';
+
+            // Add action links to dropdown content
+            dropdown.actions.forEach(action => {
+                const link = document.createElement('a');
+                link.href = `#${action.toLowerCase().replace(' ', '')}`;
+                link.innerText = action;
+                dropdownContent.appendChild(link);
+            });
+
+            // Assemble dropdown
+            dropdownDiv.appendChild(button);
+            dropdownDiv.appendChild(dropdownContent);
+            container.appendChild(dropdownDiv);
+        });
+
+        function toggleDropdown(dropdownId) {
+            // Close all dropdowns
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            Array.from(dropdowns).forEach(openDropdown => {
+                if (openDropdown.id !== dropdownId) {
+                    openDropdown.classList.remove('show');
+                }
+            });
+
+            // Toggle current dropdown
+            document.getElementById(dropdownId).classList.toggle("show");
+        }
+
+        // Close the dropdowns if the user clicks outside of them
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropdown button')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                Array.from(dropdowns).forEach(openDropdown => {
+                    openDropdown.classList.remove('show');
+                });
+            }
+        }
+    </script>
+
+</body>
+
+</html>

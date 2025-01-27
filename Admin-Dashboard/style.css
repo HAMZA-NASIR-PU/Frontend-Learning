@@ -33,6 +33,7 @@ body {
     justify-content: space-between;
     padding: 0 30px 0 30px;
     box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 .menu-icon {
@@ -253,7 +254,7 @@ body {
 .sub-menu-wrap {
     position: absolute;
     top: 100%;
-    right: 10%;
+    right: 2%;
     width: 320px;
     max-height: 0px;
     overflow: hidden;

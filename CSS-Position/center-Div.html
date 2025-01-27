@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Center a Div</title>
+    <style>
+        /* Parent container */
+        .parent {
+            position: relative;
+            /* The child will be positioned relative to this container */
+            width: 200px;
+            /* Width of the parent container */
+            height: 200px;
+            /* Height of the parent container */
+            background-color: lightgray;
+            /* Background color of the parent */
+            margin: 50px auto;
+            /* Centers the parent div horizontally in the window */
+        }
+
+        /* Child element */
+        .child {
+            position: absolute;
+            /* Position the child relative to the parent */
+            top: 50%;
+            /* Move the child to 50% from the top of the parent */
+            left: 50%;
+            /* Move the child to 50% from the left of the parent */
+            transform: translate(-50%, -50%);
+            /* Shift the child back by half of its own width and height */
+            width: 100px;
+            /* Width of the child element */
+            height: 100px;
+            /* Height of the child element */
+            background-color: blue;
+            /* Background color of the child */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="child"></div>
+    </div>
+</body>
+
+</html>

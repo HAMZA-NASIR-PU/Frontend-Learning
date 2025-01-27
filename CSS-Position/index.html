@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Absolute Example</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(90deg, rgb(153, 253, 103) 0%, rgb(88, 255, 228) 100%);
+        }
+
+        .bordered-container {
+            width: 600px;
+            height: 300px;
+            border: 2px solid black;
+        }
+
+        .absolute-item {
+            position: absolute;
+            bottom: 10px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bordered-container">
+        <div class="absolute-item"> </div>
+    </div>
+
+</body>
+
+</html>
