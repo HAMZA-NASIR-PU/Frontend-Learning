@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search with Filters and Pagination</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1>Event Data Table</h1>
+
+        <!-- Filter Button -->
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#filterModal">Apply Filters</button>
+
+        <!-- Badge Container for Filters -->
+        <div id="filter-badges" class="mb-3"></div>
+
+        <!-- Data Table -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Event Title</th>
+                    <th>Location</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+            <tbody id="event-data"></tbody>
+        </table>
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination" id="pagination"></ul>
+        </nav>
+    </div>
+
+    <!-- Filter Modal -->
+    <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filterModalLabel">Apply Filters</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="filter-form">
+                        <div class="mb-3">
+                            <label for="filterTitle" class="form-label">Event Title</label>
+                            <input type="text" id="filterTitle" class="form-control" placeholder="Enter event title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="filterLocation" class="form-label">Event Location</label>
+                            <input type="text" id="filterLocation" class="form-control"
+                                placeholder="Enter event location">
+                        </div>
+                        <div class="mb-3">
+                            <label for="filterStartDate" class="form-label">Start Date</label>
+                            <input type="date" id="filterStartDate" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="filterEndDate" class="form-label">End Date</label>
+                            <input type="date" id="filterEndDate" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="applyFilters">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentPage = 1;
+        let appliedFilters = {};
+
+        // Mock Data Source with Start and End Dates
+        const events = Array.from({ length: 100 }, (_, i) => ({
+            id: i + 1,
+            title: `Event ${i + 1}`,
+            location: `Location ${i % 5}`,
+            startDate: `2025-01-${(i % 30) + 1}`,
+            endDate: `2025-01-${(i % 30) + 3}`
+        }));
+
+        // Fetch Data (f1 function)
+        function fetchData(page = 1, filters = {}) {
+            debugger;
+            currentPage = page;
+
+            /*******************************  GETTING DATA FROM BACKEND   ************************************************************/
+            // Apply filters
+            let filteredData = events.filter(event => {
+                return (!filters.title || event.title.includes(filters.title)) &&
+                    (!filters.location || event.location.includes(filters.location)) &&
+                    (!filters.startDate || new Date(event.startDate) >= new Date(filters.startDate)) &&
+                    (!filters.endDate || new Date(event.endDate) <= new Date(filters.endDate));
+            });
+
+            // Paginate
+            const pageSize = 10;
+            const start = (page - 1) * pageSize;
+            const paginatedData = filteredData.slice(start, start + pageSize);
+
+            /** ************************************************************/
+
+
+            // Update UI
+            renderTable(paginatedData);
+            renderPagination(filteredData.length, pageSize, page);
+        }
+
+        // Render Table Data
+        function renderTable(data) {
+            debugger;
+            const tableBody = document.getElementById('event-data');
+            tableBody.innerHTML = data.map(event => `
+        <tr>
+          <td>${event.id}</td>
+          <td>${event.title}</td>
+          <td>${event.location}</td>
+          <td>${event.startDate}</td>
+          <td>${event.endDate}</td>
+        </tr>
+      `).join('');
+        }
+
+        // Render Pagination
+        function renderPagination(totalItems, pageSize, currentPage) {
+            debugger;
+            const totalPages = Math.ceil(totalItems / pageSize);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = document.createElement('li');
+                pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                pageItem.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    fetchData(i, appliedFilters);
+                });
+                pagination.appendChild(pageItem);
+            }
+        }
+
+        // Apply Filters from Modal
+        document.getElementById('applyFilters').addEventListener('click', () => {
+            debugger;
+            const title = document.getElementById('filterTitle').value;
+            const location = document.getElementById('filterLocation').value;
+            const startDate = document.getElementById('filterStartDate').value;
+            const endDate = document.getElementById('filterEndDate').value;
+
+            appliedFilters = { title, location, startDate, endDate };
+            fetchData(1, appliedFilters); // Reset to first page
+            displayFilterBadges(appliedFilters);
+
+            // Clear form fields after applying filters
+            document.getElementById('filter-form').reset();
+
+            // Close the modal
+            const filterModal = bootstrap.Modal.getInstance(document.getElementById('filterModal'));
+            filterModal.hide();
+        });
+
+        // Display Filter Badges
+        function displayFilterBadges(filters) {
+            debugger;
+            const badgeContainer = document.getElementById('filter-badges');
+            badgeContainer.innerHTML = '';
+
+            for (const [key, value] of Object.entries(filters)) {
+                if (value) {
+                    const badge = document.createElement('span');
+                    badge.className = 'badge bg-primary me-2';
+                    badge.innerHTML = `${key}: ${value} <button class="btn-close btn-close-white ms-2" aria-label="Remove"></button>`;
+                    badge.querySelector('.btn-close').addEventListener('click', () => {
+                        debugger;
+                        delete appliedFilters[key]; // Remove the filter
+                        fetchData(1, appliedFilters); // Reset to first page
+                        displayFilterBadges(appliedFilters);
+                    });
+                    badgeContainer.appendChild(badge);
+                }
+            }
+        }
+
+        // Initial Fetch
+        fetchData();
+    </script>
+</body>
+
+</html>
