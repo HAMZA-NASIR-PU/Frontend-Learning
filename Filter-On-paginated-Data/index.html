@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search with Filters and Pagination</title>
+    <title>Search with Filters and Dynamic Pagination</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -34,7 +34,7 @@
 
         <!-- Pagination -->
         <nav>
-            <ul class="pagination" id="pagination"></ul>
+            <ul class="pagination justify-content-center" id="pagination"></ul>
         </nav>
     </div>
 
@@ -78,10 +78,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let currentPage = 1;
+        const pageSize = 10;
         let appliedFilters = {};
 
-        // Mock Data Source with Start and End Dates
-        const events = Array.from({ length: 100 }, (_, i) => ({
+        // Mock Data Source
+        const events = Array.from({ length: 500 }, (_, i) => ({
             id: i + 1,
             title: `Event ${i + 1}`,
             location: `Location ${i % 5}`,
@@ -89,12 +90,10 @@
             endDate: `2025-01-${(i % 30) + 3}`
         }));
 
-        // Fetch Data (f1 function)
+        // Fetch Data
         function fetchData(page = 1, filters = {}) {
-            debugger;
             currentPage = page;
 
-            /*******************************  GETTING DATA FROM BACKEND   ************************************************************/
             // Apply filters
             let filteredData = events.filter(event => {
                 return (!filters.title || event.title.includes(filters.title)) &&
@@ -104,21 +103,15 @@
             });
 
             // Paginate
-            const pageSize = 10;
             const start = (page - 1) * pageSize;
             const paginatedData = filteredData.slice(start, start + pageSize);
 
-            /** ************************************************************/
-
-
-            // Update UI
             renderTable(paginatedData);
-            renderPagination(filteredData.length, pageSize, page);
+            renderPagination(filteredData.length, pageSize, currentPage);
         }
 
         // Render Table Data
         function renderTable(data) {
-            debugger;
             const tableBody = document.getElementById('event-data');
             tableBody.innerHTML = data.map(event => `
         <tr>
@@ -131,14 +124,22 @@
       `).join('');
         }
 
-        // Render Pagination
+        // Render Pagination with First, Last, Previous, and Next
         function renderPagination(totalItems, pageSize, currentPage) {
-            debugger;
             const totalPages = Math.ceil(totalItems / pageSize);
+            const maxVisiblePages = 5;
             const pagination = document.getElementById('pagination');
             pagination.innerHTML = '';
 
-            for (let i = 1; i <= totalPages; i++) {
+            // First and Previous Buttons
+            pagination.appendChild(createPageButton('First', 1, currentPage === 1));
+            pagination.appendChild(createPageButton('Previous', currentPage - 1, currentPage === 1));
+
+            // Dynamic Pagination Range
+            const startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+            for (let i = startPage; i <= endPage; i++) {
                 const pageItem = document.createElement('li');
                 pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
                 pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
@@ -148,11 +149,26 @@
                 });
                 pagination.appendChild(pageItem);
             }
+
+            // Next and Last Buttons
+            pagination.appendChild(createPageButton('Next', currentPage + 1, currentPage === totalPages));
+            pagination.appendChild(createPageButton('Last', totalPages, currentPage === totalPages));
+        }
+
+        // Helper to create pagination buttons
+        function createPageButton(label, page, disabled) {
+            const li = document.createElement('li');
+            li.className = `page-item ${disabled ? 'disabled' : ''}`;
+            li.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+            li.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!disabled) fetchData(page, appliedFilters);
+            });
+            return li;
         }
 
         // Apply Filters from Modal
         document.getElementById('applyFilters').addEventListener('click', () => {
-            debugger;
             const title = document.getElementById('filterTitle').value;
             const location = document.getElementById('filterLocation').value;
             const startDate = document.getElementById('filterStartDate').value;
@@ -172,7 +188,6 @@
 
         // Display Filter Badges
         function displayFilterBadges(filters) {
-            debugger;
             const badgeContainer = document.getElementById('filter-badges');
             badgeContainer.innerHTML = '';
 
@@ -182,7 +197,6 @@
                     badge.className = 'badge bg-primary me-2';
                     badge.innerHTML = `${key}: ${value} <button class="btn-close btn-close-white ms-2" aria-label="Remove"></button>`;
                     badge.querySelector('.btn-close').addEventListener('click', () => {
-                        debugger;
                         delete appliedFilters[key]; // Remove the filter
                         fetchData(1, appliedFilters); // Reset to first page
                         displayFilterBadges(appliedFilters);
