@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="buttons">
+        <button onclick="showToast(sucessMsg)">Success</button>
+        <button onclick="showToast(errorMsg)">Error</button>
+        <button onclick="showToast(invalidMsg)">Invalid</button>
+    </div>
+    <div id="toastBox"></div>
+
+</body>
+<script>
+    let toastBox = document.getElementById('toastBox');
+    let sucessMsg = '<i class="fa-solid fa-circle-check"></i> Successfully Submitted.';
+    let errorMsg = '<i class="fa-solid fa-circle-xmark"></i> An error occured!';
+    let invalidMsg = '<i class="fa-solid fa-circle-exclamation"></i> Warning: Invalid action.';
+
+
+    function showToast(msg) {
+        let toast = document.createElement('div');
+        toast.classList.add('toast');
+        toast.innerHTML = msg;
+        toastBox.appendChild(toast);
+
+        if (msg.includes('error')) {
+            toast.classList.add('error');
+        } else if (msg.includes('Warning')) {
+            toast.classList.add('invalid');
+        }
+
+        setTimeout(() => {
+            toast.remove();
+        }, 6000);
+    }
+</script>
+
+</html>
