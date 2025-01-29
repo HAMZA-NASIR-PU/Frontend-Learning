@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
@@ -56,7 +57,7 @@
                             <span>></span>
                         </a>
 
-                        <a href="#" class="sub-menu-link">
+                        <a href="#" class="sub-menu-link" onclick="showToast(logoutMessage)">
                             <span class="material-icons-outlined">logout</span>
                             <p>Logout</p>
                             <span>></span>
@@ -163,8 +164,34 @@
 
     </div>
 
+    <div id="toastBox"></div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        let toastBox = document.getElementById('toastBox');
+        let errorMsg = '<i class="fa-solid fa-circle-xmark"></i> An error occured!';
+        let invalidMsg = '<i class="fa-solid fa-circle-exclamation"></i> Warning: Invalid action.';
+        let logoutMessage = '<i class="fa-solid fa-circle-check"></i> Successfully Log out from the portal.';
+
+
+        function showToast(msg) {
+            let toast = document.createElement('div');
+            toast.classList.add('toast');
+            toast.innerHTML = msg;
+            toastBox.appendChild(toast);
+
+            if (msg.includes('error')) {
+                toast.classList.add('error');
+            } else if (msg.includes('Warning')) {
+                toast.classList.add('invalid');
+            }
+
+            setTimeout(() => {
+                toast.remove();
+            }, 6000);
+        }
+    </script>
 </body>
 
 </html>
