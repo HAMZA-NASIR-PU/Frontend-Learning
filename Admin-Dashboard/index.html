@@ -29,8 +29,114 @@
                 <span class="material-icons-outlined">search</span>
             </div>
             <div class="header-right">
-                <span class="material-icons-outlined" style="cursor: pointer;">notifications</span>
-                <span class="material-icons-outlined" style="margin-left: 12px;cursor: pointer;">email</span>
+                <span id="notificationBtn" class="material-icons-outlined" style="cursor: pointer;">notifications</span>
+                <div class="dropdown" id="notificationMenu">
+                    <div class="dropdown-item" style="justify-content: center;">
+                        15 Notifications
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">
+                        <div class="info">
+                            <span class="material-icons-outlined">
+                                mail
+                            </span>
+                            <span>4 new messages</span>
+                        </div>
+                        <div class="text-muted text-sm">
+                            3 mins
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">
+                        <div class="info">
+                            <span class="material-icons-outlined">
+                                group
+                            </span>
+                            <span>8 friend requests</span>
+                        </div>
+                        <div class="text-muted text-sm">
+                            12 hours
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">
+                        <div class="info" style="width: 153px;">
+                            <span class="material-icons-outlined">
+                                article
+                            </span>
+                            <span>3 new reports</span>
+                        </div>
+                        <div class="text-muted text-sm">
+                            2 days
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" style="justify-content: center;">
+                        See all Notifications
+                    </div>
+                    <div class="dropdown-divider"></div>
+                </div>
+                <span id="messagesBtn" class="material-icons-outlined" style="margin-left: 12px;cursor: pointer;">email</span>
+                <div class="messages-dropdown" id="messagesMenu">
+                    <div class="dropdown-item">
+                        <div>
+                            <img src="assets/user1-128x128.jpg" alt="">
+                        </div>
+                        <div class="notification-dropdown-info">
+                            <div class="notification-dropdown-profile-name">
+                                <span>John Diesel</span>
+                                <span class="material-icons-outlined">star</span>
+                            </div>
+                            <div class="text-sm messages-dropdown-message">I got your message bro</div>
+                            <div class="text-sm text-muted messages-dropdown-time"><span
+                                    class="material-icons-outlined messages-dropdown-icon">schedule</span>
+                                <div style="padding-top: 2px;">4 Hours
+                                    Ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">
+                        <div>
+                            <img src="assets/user8-128x128.jpg" alt="">
+                        </div>
+                        <div class="notification-dropdown-info">
+                            <div class="notification-dropdown-profile-name">
+                                <span>Brad pierce</span>
+                                <span class="material-icons-outlined">star</span>
+                            </div>
+                            <div class="text-sm messages-dropdown-message">Call me whenever you can...</div>
+                            <div class="text-sm text-muted messages-dropdown-time"><span
+                                    class="material-icons-outlined messages-dropdown-icon">schedule</span>
+                                <div style="padding-top: 2px;">4 Hours
+                                    Ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item">
+                        <div>
+                            <img src="assets/user3-128x128.jpg" alt="">
+                        </div>
+                        <div class="notification-dropdown-info">
+                            <div class="notification-dropdown-profile-name">
+                                <span>Nora Silvester</span>
+                                <span class="material-icons-outlined">star</span>
+                            </div>
+                            <div class="text-sm messages-dropdown-message">The subject goes here</div>
+                            <div class="text-sm text-muted messages-dropdown-time"><span
+                                    class="material-icons-outlined messages-dropdown-icon">schedule</span>
+                                <div style="padding-top: 2px;">4 Hours
+                                    Ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" style="justify-content: center;">
+                        See All Messages
+                    </div>
+                    <div class="dropdown-divider"></div>
+                </div>
 
                 <span id="profileBtn" class="material-icons-outlined"
                     style="margin-left: 12px;cursor: pointer;">account_circle</span>

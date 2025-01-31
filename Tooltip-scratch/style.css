@@ -1,0 +1,101 @@
+body {
+    font-family: 'Arial', sans-serif;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    padding: 8px 12px;
+    background-color: #0078d4;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Tooltip Arrows */
+.tooltip::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.tooltip[data-position="top"]::after {
+    bottom: -5px;
+    left: 50%;
+    border-width: 5px 5px 0;
+    border-color: #333 transparent transparent transparent;
+    transform: translateX(-50%);
+}
+
+.tooltip[data-position="right"]::after {
+    left: -5px;
+    top: 50%;
+    border-width: 5px 5px 5px 0;
+    border-color: transparent #333 transparent transparent;
+    transform: translateY(-50%);
+}
+
+.tooltip[data-position="bottom"]::after {
+    top: -5px;
+    left: 50%;
+    border-width: 0 5px 5px;
+    border-color: transparent transparent #333 transparent;
+    transform: translateX(-50%);
+}
+
+.tooltip[data-position="left"]::after {
+    right: -5px;
+    top: 50%;
+    border-width: 5px 0 5px 5px;
+    border-color: transparent transparent transparent #333;
+    transform: translateY(-50%);
+}
+
+.tooltip-wrapper:hover .tooltip {
+    opacity: 1;
+}
+
+[data-tooltip-position="top"] .tooltip {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+[data-tooltip-position="right"] .tooltip {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+[data-tooltip-position="bottom"] .tooltip {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+[data-tooltip-position="left"] .tooltip {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}

@@ -26,6 +26,7 @@ document.addEventListener('click', function (event) {
 });
 
 
+
 // -------------- CHARTS -----------------
 
 var barChartOptions = {
@@ -139,3 +140,38 @@ document.addEventListener('click', function (event) {
         profileMenu.classList.remove('open-menu');
     }
 });
+
+// ************************************* NOTIFICATION DROPDOWN START **********************************
+
+const notificationMenu = document.getElementById('notificationMenu');
+const notificationBtn = document.getElementById('notificationBtn');
+
+document.addEventListener('click', function (event) {
+
+    if (event.target.id === 'notificationBtn') {
+        notificationMenu.classList.toggle('open-menu');
+    }
+    else if (!notificationMenu.contains(event.target)) {
+        notificationMenu.classList.remove('open-menu');
+    }
+});
+
+// ************************************* NOTIFICATION DROPDOWN END **********************************
+
+
+// ************************************* MESSAGES DROPDOWN START **********************************
+
+const messagesMenu = document.getElementById('messagesMenu');
+const messagesBtn = document.getElementById('messagesBtn');
+
+document.addEventListener('click', function (event) {
+
+    if (event.target.id === 'messagesBtn') {
+        messagesMenu.classList.toggle('open-menu');
+    }
+    else if (!notificationMenu.contains(event.target)) {
+        messagesMenu.classList.remove('open-menu');
+    }
+});
+
+// ************************************* MESSAGES DROPDOWN START **********************************
