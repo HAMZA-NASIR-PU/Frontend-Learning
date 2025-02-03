@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Overflow Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 300px;
+            /* Container width */
+            border: 2px solid #000;
+            overflow-x: auto;
+            /* Allow horizontal scrolling when content overflows */
+            white-space: nowrap;
+            /* Prevent the content from wrapping */
+            margin: 20px auto;
+            /* Center the container */
+            padding: 10px;
+        }
+
+        .content {
+            width: 600px;
+            /* Content is wider than the container */
+            background-color: lightgray;
+            /* Visual distinction for content */
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia quam vel libero cursus, sit amet
+            ullamcorper enim volutpat. Integer lacinia diam sed lorem dapibus cursus.
+        </div>
+    </div>
+</body>
+
+</html>
