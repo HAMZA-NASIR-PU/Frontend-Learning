@@ -126,7 +126,7 @@ var areaChartOptions = {
 var areaChart = new ApexCharts(document.querySelector("#area-chart"), areaChartOptions);
 areaChart.render();
 
-
+// ************************************* PROFILE MENU DROPDOWN START **********************************
 
 const profileMenu = document.getElementById('profileMenu');
 const profileBtn = document.getElementById('profileBtn');
@@ -140,6 +140,8 @@ document.addEventListener('click', function (event) {
         profileMenu.classList.remove('open-menu');
     }
 });
+
+// ************************************* PROFILE MENU DROPDOWN START **********************************
 
 // ************************************* NOTIFICATION DROPDOWN START **********************************
 

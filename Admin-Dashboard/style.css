@@ -245,6 +245,7 @@ body {
     }
 }
 
+/* ------------------- PROFILE MENU DROPDOWN START -------------------- */
 .sub-menu {
     background: #fff;
     padding: 20px;
@@ -297,6 +298,7 @@ body {
 .sub-menu-link:hover p {
     font-weight: 600;
 }
+/* ------------------- PROFILE MENU DROPDOWN END -------------------- */
 
 /* ------------------- TOASTER -------------------- */
 
