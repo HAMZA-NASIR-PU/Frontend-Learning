@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Style Image Stacking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .image-stack {
+            position: relative;
+            width: 120px;
+            /* Adjust based on number of images */
+            height: 50px;
+        }
+
+        .stacked-image {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            /*border: 2px solid white;*/
+            position: absolute;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .stacked-image:hover {
+            transform: scale(1.1);
+        }
+
+        .img1 {
+            left: 0;
+            z-index: 1;
+        }
+
+        .img2 {
+            left: 25px;
+            z-index: 2;
+        }
+
+        .img3 {
+            left: 50px;
+            z-index: 3;
+        }
+
+        .text {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .show-all {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .show-all:hover {
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="image-stack">
+            <img src="https://media.licdn.com/dms/image/v2/D4D03AQHzXCgOGx6tkg/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1719052386405?e=1744848000&v=beta&t=fno3pi9jr2L7loYuDFsoEyPz2OOzyvDL9pBh1rUmgIk"
+                alt="Person 1" class="stacked-image img1">
+            <img src="https://media.licdn.com/dms/image/v2/D4D03AQEaLinhQ0kC0w/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1730747835079?e=1744848000&v=beta&t=uckSwngt1Ju_StGVRh-gim7vMckvwNO5pzD0v9ornnA"
+                alt="Person 2" class="stacked-image img2">
+            <img src="https://media.licdn.com/dms/image/v2/D4D03AQGR8D_UYt9AwA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1727104312454?e=1744848000&v=beta&t=JwKUO8-Kn2_04pMdAf52OR8cfJtOx7dOOX8TWAA0xFw"
+                alt="Person 3" class="stacked-image img3">
+        </div>
+        <span class="text">Ayesha and others in your network</span>
+        <button class="show-all">Show all</button>
+    </div>
+
+</body>
+
+</html>
