@@ -1,0 +1,1 @@
+## 📌 See Event Delegation Concept Implementation in that `index.html` file
