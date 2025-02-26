@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagination Component</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <div class="data-container" id="data-container"></div>
+        <nav>
+            <ul class="pagination justify-content-center" id="pagination"></ul>
+        </nav>
+    </div>
+
+    <script>
+        const itemsPerPage = 5;
+        const totalItems = 150;
+        const maxVisiblePages = 5; // Change this to control the max number of visible pages
+        const data = Array.from({ length: totalItems }, (_, i) => `Item ${i + 1}`);
+
+        let currentPage = 1;
+        const totalPages = Math.ceil(data.length / itemsPerPage);
+        const paginationContainer = document.getElementById('pagination');
+        const dataContainer = document.getElementById('data-container');
+
+        function renderData(page) {
+            dataContainer.innerHTML = data.slice((page - 1) * itemsPerPage, page * itemsPerPage).join('<br>');
+        }
+
+        function renderPagination() {
+            paginationContainer.innerHTML = '';
+
+            const firstBtn = createButton('First', 1, currentPage === 1);
+            const prevBtn = createButton('Previous', currentPage - 1, currentPage === 1);
+            paginationContainer.append(firstBtn, prevBtn);
+
+            const pageNumbers = getPageNumbers();
+            pageNumbers.forEach(num => {
+                paginationContainer.append(createButton(num, num, false, num === currentPage));
+            });
+
+            const nextBtn = createButton('Next', currentPage + 1, currentPage === totalPages);
+            const lastBtn = createButton('Last', totalPages, currentPage === totalPages);
+            paginationContainer.append(nextBtn, lastBtn);
+        }
+
+
+        function createButton(text, page, isDisabled, isActive = false) {
+            const li = document.createElement('li');
+            li.className = 'page-item';
+
+            if (isDisabled) {
+                li.classList.add('disabled');
+            }
+
+            // Only number buttons should have the 'active' class
+            if (isActive && !isNaN(text)) {
+                li.classList.add('active');
+            }
+
+            const btn = document.createElement('a');
+            btn.className = 'page-link';
+            btn.href = '#';
+            btn.textContent = text;
+            btn.dataset.page = page;
+
+            li.appendChild(btn);
+            return li;
+        }
+
+
+
+        function getPageNumbers() {
+            let start = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let end = Math.min(totalPages, start + maxVisiblePages - 1);
+
+            if (end - start < maxVisiblePages - 1) {
+                start = Math.max(1, end - (maxVisiblePages - 1));
+            }
+
+            return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+        }
+
+
+        paginationContainer.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'A' || e.target.parentElement.classList.contains('disabled')) return;
+            currentPage = Number(e.target.dataset.page);
+            renderData(currentPage);
+            renderPagination();
+        });
+
+        renderData(currentPage);
+        renderPagination();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
