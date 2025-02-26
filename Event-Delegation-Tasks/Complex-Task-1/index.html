@@ -148,14 +148,17 @@
 
 
         document.addEventListener('keydown', function (e) {
+            let columnName = null;
+            let rowNumber = null;
+            const arrowKeys = ['ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
             if (e.key === 'Enter') {
 
                 //Save the input field value
                 if (document.querySelector('.editable-field')) {
                     const inputField = document.querySelector('.editable-field');
 
-                    let columnName = inputField.dataset.columnName;
-                    let rowNumber = inputField.dataset.rowNumber;
+                    columnName = inputField.dataset.columnName;
+                    rowNumber = inputField.dataset.rowNumber;
 
                     // Saving value in DB :)
                     events[rowNumber][columnName] = inputField.value;
@@ -166,32 +169,59 @@
 
                     // Saving Data
                     console.log(`Saving Data in DB: Column Name: ${columnName}, Row Number: ${rowNumber}, Value: ${JSON.stringify(events
-                    [rowNumber], null, 2)}`);
+                    [rowNumber], null, 2)
+                        }`);
+                }
+                return;
+            }
+
+            // Handle arrow key navigation
+            if (arrowKeys.includes(e.key)) {
+                const inputField = document.querySelector('.editable-field');
+                if (!inputField) return;
+
+                columnName = inputField.dataset.columnName;
+                rowNumber = parseInt(inputField.dataset.rowNumber);
+
+                const columns = Object.keys(events[0]);
+                let columnIndex = columns.indexOf(columnName);
+
+                if (e.key === 'ArrowUp' && rowNumber > 0) rowNumber--;
+                if (e.key === 'ArrowDown' && rowNumber < events.length - 1) rowNumber++;
+                if (e.key === 'ArrowLeft' && columnIndex > 1) columnIndex--;
+                if (e.key === 'ArrowRight' && columnIndex < columns.length - 1) columnIndex++;
+
+                // Save the current field value before navigating
+                events[inputField.dataset.rowNumber][columnName] = inputField.value;
+                tdReference.innerHTML = inputField.value;
+                inputField.replaceWith(tdReference);
+
+                // Saving Data
+                console.log(`Saving Data in DB: Column Name: ${columnName}, Row Number: ${rowNumber}, Value: ${JSON.stringify(events
+                [rowNumber], null, 2)
+                    }`);
+
+                // Move to the new field
+                const newColumnName = columns[columnIndex];
+                const newTd = document.querySelector(`tr[data-row-number="${rowNumber}"] td[data-field="${newColumnName}"]`);
+
+                if (newTd) {
+                    const newInputElement = document.createElement('input');
+                    newInputElement.classList.add('editable-field');
+                    newInputElement.dataset.columnName = newColumnName;
+                    newInputElement.dataset.rowNumber = rowNumber;
+                    newInputElement.type = newColumnName.includes('Date') ? 'date' : 'text';
+                    newInputElement.value = events[rowNumber][newColumnName];
+
+                    tdReference = newTd;
+                    newTd.replaceWith(newInputElement);
+                    newInputElement.focus();
                 }
             }
-        });
 
+        });
 
         populateTable();
-
-        // Working of MutationObserver
-
-        // Define the observer configuration
-        const config = {
-            childList: true,      // Observe addition/removal of child elements
-            attributes: true,     // Observe attribute changes
-            characterData: true,  // Observe text content changes
-            subtree: true         // Observe the entire DOM tree
-        };
-
-        // Create a MutationObserver instance
-        const observer = new MutationObserver((mutationsList, observer) => {
-            console.log("Something happened with the DOM tree...");
-        });
-
-        // Start observing
-        observer.observe(document.body, config);
-
     </script>
 </body>
 
