@@ -160,12 +160,9 @@
                     // Saving value in DB :)
                     events[rowNumber][columnName] = inputField.value;
 
-                    const tdElement = document.createElement('td');
-                    tdElement.classList.add('col-1');
-                    tdElement.dataset.field = columnName;
-                    tdElement.innerHTML = inputField.value;
+                    tdReference.innerHTML = inputField.value;
 
-                    inputField.replaceWith(tdElement);
+                    inputField.replaceWith(tdReference);
 
                     // Saving Data
                     console.log(`Saving Data in DB: Column Name: ${columnName}, Row Number: ${rowNumber}, Value: ${JSON.stringify(events
