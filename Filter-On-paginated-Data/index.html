@@ -222,20 +222,6 @@
                     fetchData(currentPage, appliedFilters);
                 }
             });
-
-            // Old Code without using Event Delegation Pattern
-            // document.querySelectorAll('th[data-field]').forEach(th => {
-            //     th.addEventListener('click', function () {
-            //         var field = this.getAttribute('data-field');
-            //         if (sortField === field) {
-            //             sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-            //         } else {
-            //             sortField = field;
-            //             sortOrder = 'asc';
-            //         }
-            //         fetchData(currentPage, appliedFilters);
-            //     });
-            // });
         }
 
         // Render Pagination with First, Last, Previous, and Next
@@ -257,11 +243,6 @@
                 const pageItem = document.createElement('li');
                 pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
                 pageItem.innerHTML = `<a class="page-link" data-page-number=${i} href="#">${i}</a>`;
-                // Before doing Event Delegation
-                // pageItem.addEventListener('click', (e) => {
-                //     e.preventDefault();
-                //     fetchData(i, appliedFilters);
-                // });
                 pagination.appendChild(pageItem);
             }
 
@@ -275,11 +256,6 @@
             const li = document.createElement('li');
             li.className = `page-item ${disabled ? 'disabled' : ''}`;
             li.innerHTML = `<a class="page-link" data-page-number=${page} href="#">${label}</a>`;
-            // Before doing Event Delegation
-            // li.addEventListener('click', (e) => {
-            //     e.preventDefault();
-            //     if (!disabled) fetchData(page, appliedFilters);
-            // });
             return li;
         }
 
