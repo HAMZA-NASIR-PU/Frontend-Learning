@@ -13,24 +13,23 @@
 </head>
 
 <body>
+
     <div class="container mt-4">
         <h1>Event Data Table</h1>
 
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#filterModal">Apply
-            Filters</button>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#filterModal">Apply Filters</button>
 
         <!-- Badge Container for Filters -->
         <div id="filter-badges" class="mb-3"></div>
 
         <!-- Data Table -->
-        <table class="table table-hover table-striped table-bordered" id="data-table">
-        </table>
+        <table id="data-table" class="table table-hover table-striped table-bordered"></table>
 
         <!-- Pagination and Page Size Selector -->
         <div class="d-flex align-items-center">
-            <!-- Pagination (Centered) -->
+            <!-- Pagination(centered) -->
             <nav class="flex-grow-1">
-                <ul class="pagination justify-content-center" id="pagination"></ul>
+                <ul id="pagination" class="pagination justify-content-center"></ul>
             </nav>
 
             <!-- Page Size Selector (Right Aligned) -->
@@ -40,27 +39,26 @@
                 <option value="15">15</option>
             </select>
         </div>
-
     </div>
 
     <!-- Filter Modal -->
-    <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div id="filterModal" class="modal fade" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="filterModalLabel">Apply Filters</h5>
+                    <h5 id="filterModalLabel" class="modal-title">Apply Filters</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="filter-form">
                         <div class="mb-3">
                             <label for="filterTitle" class="form-label">Event Title</label>
-                            <input type="text" id="filterTitle" class="form-control" placeholder="Enter event title">
+                            <input type="text" id="filterTitle" class="form-control" placeholder="Enter event Title">
                         </div>
                         <div class="mb-3">
                             <label for="filterLocation" class="form-label">Event Location</label>
                             <input type="text" id="filterLocation" class="form-control"
-                                placeholder="Enter event location">
+                                placeholder="Enter event Location">
                         </div>
                         <div class="mb-3">
                             <label for="filterStartDate" class="form-label">Start Date</label>
@@ -79,7 +77,6 @@
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let currentPage = 1;
@@ -88,7 +85,6 @@
         let sortField = 'id';
         let sortOrder = 'asc';
 
-        // Mapping for filter keys to user-friendly names
         const filterLabels = {
             title: 'Event Title',
             location: 'Event Location',
@@ -96,20 +92,18 @@
             endDate: 'End Date'
         };
 
-        // Mock Data Source
         const events = Array.from({ length: 500 }, (_, i) => ({
             id: i + 1,
             title: `Event ${i + 1}`,
             location: `Location ${i % 5}`,
-            startDate: `2025-01-${(i % 30) + 1}`,
-            endDate: `2025-01-${(i % 30) + 3}`
+            startDate: `2025-01-${String((i % 30) + 1).padStart(2, '0')}`,
+            endDate: `2025-01-${String((i % 30) + 3).padStart(2, '0')}`
         }));
 
-        // Fetch Data
         function fetchData(page = 1, filters = {}) {
             currentPage = page;
 
-            // Apply filters
+            // Apply Filters
             let filteredData = events.filter(event => {
                 return (!filters.title || event.title.includes(filters.title)) &&
                     (!filters.location || event.location.includes(filters.location)) &&
@@ -117,19 +111,18 @@
                     (!filters.endDate || new Date(event.endDate) <= new Date(filters.endDate));
             });
 
-            // Sort data
             filteredData.sort((a, b) => {
                 let valA = a[sortField];
                 let valB = b[sortField];
 
-                // Convert date fields to Date objects for correct sorting
-                if (sortField === "startDate" || sortField === "endDate") {
+                if (sortField === 'startDate' || sortField === 'endDate') {
                     valA = new Date(valA);
                     valB = new Date(valB);
                 }
 
-                if (valA < valB) return sortOrder === "asc" ? -1 : 1;
-                if (valA > valB) return sortOrder === "asc" ? 1 : -1;
+                if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
+                if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
+
                 return 0;
             });
 
@@ -137,31 +130,33 @@
             let start = (page - 1) * pageSize;
             let paginatedData = filteredData.slice(start, start + pageSize);
 
-            // If the user increases the page size while on the last page, there may be no data left to display.  
-            // Reset to the first page to ensure data is shown.
+            // If the user increases the page size while on the last page, there may be no data left to display.
+            // Reset to the first page to ensure data is shown
             if (!paginatedData.length) {
                 page = 1;
                 currentPage = page;
+
+                // Apply Filters
                 filteredData = events.filter(event => {
                     return (!filters.title || event.title.includes(filters.title)) &&
                         (!filters.location || event.location.includes(filters.location)) &&
                         (!filters.startDate || new Date(event.startDate) >= new Date(filters.startDate)) &&
-                        (!filters.endDate || new Date(event.endDate) <= new Date(filters.endDate));
+                        (!filters.endDate || new Date(event.endDate) <= new Date(filters.endDate))
                 });
 
-                // Sort data
+                // Sort Data
                 filteredData.sort((a, b) => {
                     let valA = a[sortField];
                     let valB = b[sortField];
 
-                    // Convert date fields to Date objects for correct sorting
-                    if (sortField === "startDate" || sortField === "endDate") {
+                    if (['startDate', 'endDate'].includes(sortField)) {
                         valA = new Date(valA);
                         valB = new Date(valB);
                     }
 
-                    if (valA < valB) return sortOrder === "asc" ? -1 : 1;
-                    if (valA > valB) return sortOrder === "asc" ? 1 : -1;
+                    if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
+                    if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
+
                     return 0;
                 });
 
@@ -171,42 +166,41 @@
             }
 
             renderTable(paginatedData);
-            renderPagination(filteredData.length, pageSize, currentPage);
+            renderPagination(filteredData.length);
         }
 
-        // Render Table Data
         function renderTable(data) {
 
             const dataTable = document.getElementById('data-table');
             dataTable.innerHTML = `
-                                    <thead>
-                                        <tr>
-                                            <th data-field="id">ID ${getSortIcon('id')}</th>
-                                            <th data-field="title">Title ${getSortIcon('title')}</th>
-                                            <th data-field="location">Location ${getSortIcon('location')}</th>
-                                            <th data-field="startDate">Start Date ${getSortIcon('startDate')}</th>
-                                            <th data-field="endDate">End Date ${getSortIcon('endDate')}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="event-data"></tbody>
-                                `;
+                              <thead>
+                                <tr>
+                                  <th data-field="id">ID ${getSortIcon('id')}</th>
+                                  <th data-field="title">Title ${getSortIcon('title')}</th>
+                                  <th data-field="location">Location ${getSortIcon('location')}</th>
+                                  <th data-field="startDate">Start Date ${getSortIcon('startDate')}</th>
+                                  <th data-field="endDate">End Date ${getSortIcon('endDate')}</th>
+                                </tr>
+                              </thead>
+                              <tbody id="event-data"></tbody>
+                            `;
+
             const tableBody = document.getElementById('event-data');
-
             tableBody.innerHTML = data.map(event => `
-                            <tr>
-                                <td>${event.id}</td>
-                                <td>${event.title}</td>
-                                <td>${event.location}</td>
-                                <td>${event.startDate}</td>
-                                <td>${event.endDate}</td>
-                            </tr>
-                        `).join('');
+                                               <tr>
+                                                  <td>${event.id}</td>
+                                                  <td>${event.title}</td>
+                                                  <td>${event.location}</td>
+                                                  <td>${event.startDate}</td>
+                                                  <td>${event.endDate}</td>
+                                               </tr>
+                                              `).join('');
 
-            // Improved Code using Event Delegation Pattern           
+            // Event Listener for sorting
             document.querySelector('thead').addEventListener('click', function (e) {
                 if (e.target.dataset.field) {
-                    var field = e.target.dataset.field;
-                    if (sortField === field) {
+                    let field = e.target.dataset.field;
+                    if (field === sortField) {
                         sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
                     } else {
                         sortField = field;
@@ -217,8 +211,7 @@
             });
         }
 
-        // Render Pagination with First, Last, Previous, and Next
-        function renderPagination(totalItems, pageSize, currentPage) {
+        function renderPagination(totalItems) {
             const totalPages = Math.ceil(totalItems / pageSize);
             const maxVisiblePages = 5;
             const pagination = document.getElementById('pagination');
@@ -228,7 +221,6 @@
             pagination.appendChild(createPageButton('First', 1, currentPage === 1));
             pagination.appendChild(createPageButton('Previous', currentPage - 1, currentPage === 1));
 
-            // Dynamic Pagination Range
             const startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
             const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
@@ -239,20 +231,17 @@
                 pagination.appendChild(pageItem);
             }
 
-            // Next and Last Buttons
             pagination.appendChild(createPageButton('Next', currentPage + 1, currentPage === totalPages));
             pagination.appendChild(createPageButton('Last', totalPages, currentPage === totalPages));
         }
 
-        // Helper to create pagination buttons
         function createPageButton(label, page, disabled) {
-            const li = document.createElement('li');
-            li.className = `page-item ${disabled ? 'disabled' : ''}`;
-            li.innerHTML = `<a class="page-link" data-page-number=${page} href="#">${label}</a>`;
-            return li;
+            const pageItem = document.createElement('li');
+            pageItem.className = `page-item ${disabled ? 'disabled' : ''}`;
+            pageItem.innerHTML = `<a class="page-link" data-page-number=${page} href="#" >${label}</a>`;
+            return pageItem;
         }
 
-        // Display Filter Badges
         function displayFilterBadges(filters) {
             const badgeContainer = document.getElementById('filter-badges');
             badgeContainer.innerHTML = '';
@@ -261,16 +250,21 @@
                 if (value) {
                     const badge = document.createElement('span');
                     badge.className = 'badge bg-primary me-2';
-                    badge.innerHTML = `${filterLabels[key]}: ${value} <button class="btn-close btn-close-white ms-2" aria-label="Remove"></button>`;
-                    badge.querySelector('.btn-close').addEventListener('click', () => {
-                        delete appliedFilters[key]; // Remove the filter
-                        fetchData(1, appliedFilters); // Reset to first page
-                        displayFilterBadges(appliedFilters);
-                    });
+                    badge.innerHTML = `${filterLabels[key]}: ${value} <button class="btn-close btn-white ms-2" data-filter-key=${key} aria-label="Remove"></button>`;
                     badgeContainer.appendChild(badge);
                 }
             }
         }
+
+        // Event Listener for removing filters that are applied on the data.
+        document.getElementById('filter-badges').addEventListener('click', function (e) {
+            if (e.target.classList.contains('btn-close')) {
+                let key = e.target.dataset.filterKey;
+                delete appliedFilters[key];
+                fetchData(1, appliedFilters);
+                displayFilterBadges(appliedFilters);
+            }
+        });
 
         function getSortIcon(field) {
             if (sortField === field) {
@@ -279,33 +273,30 @@
             return '';
         }
 
-        // Apply Filters from Modal
-        document.getElementById('applyFilters').addEventListener('click', () => {
+        // Event Listener for applying filters provided by the filter form
+        document.getElementById('applyFilters').addEventListener('click', function (e) {
             const title = document.getElementById('filterTitle').value;
             const location = document.getElementById('filterLocation').value;
             const startDate = document.getElementById('filterStartDate').value;
             const endDate = document.getElementById('filterEndDate').value;
 
             appliedFilters = { title, location, startDate, endDate };
-            fetchData(1, appliedFilters); // Reset to first page
+            fetchData(1, appliedFilters);
             displayFilterBadges(appliedFilters);
 
-            // Clear form fields after applying filters
             document.getElementById('filter-form').reset();
 
-            // Close the modal
             const filterModal = bootstrap.Modal.getInstance(document.getElementById('filterModal'));
             filterModal.hide();
         });
 
         // Event Listener for changing the page size.
-        document.getElementById('pageSizeSelector').addEventListener('change', function (e) {
-            console.log(`New Page Size: ${e.target.value}`);
+        document.getElementById('pageSizeSelector').addEventListener('click', function (e) {
             pageSize = parseInt(e.target.value);
             fetchData(currentPage, appliedFilters);
         });
 
-        // Event Listener for changing page number
+        // Event Listener for changing the page number.
         document.getElementById('pagination').addEventListener('click', function (e) {
             if (e.target.classList.contains('disabled')) return;
             if (e.target.dataset.pageNumber) {
@@ -314,9 +305,10 @@
             }
         });
 
-        // Initial Fetch
         fetchData();
+
     </script>
+
 </body>
 
 </html>
