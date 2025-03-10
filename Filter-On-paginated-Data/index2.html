@@ -256,6 +256,13 @@
             }
         }
 
+        function getSortIcon(field) {
+            if (sortField === field) {
+                return sortOrder === 'asc' ? '<i class="bi bi-arrow-up"></i>' : '<i class="bi bi-arrow-down"></i>';
+            }
+            return '';
+        }
+
         // Event Listener for removing filters that are applied on the data.
         document.getElementById('filter-badges').addEventListener('click', function (e) {
             if (e.target.classList.contains('btn-close')) {
@@ -266,13 +273,6 @@
             }
         });
 
-        function getSortIcon(field) {
-            if (sortField === field) {
-                return sortOrder === 'asc' ? '<i class="bi bi-arrow-up"></i>' : '<i class="bi bi-arrow-down"></i>';
-            }
-            return '';
-        }
-
         // Event Listener for applying filters provided by the filter form
         document.getElementById('applyFilters').addEventListener('click', function (e) {
             const title = document.getElementById('filterTitle').value;
@@ -280,6 +280,7 @@
             const startDate = document.getElementById('filterStartDate').value;
             const endDate = document.getElementById('filterEndDate').value;
 
+            // Shallow Copy and not a deep copy
             appliedFilters = { title, location, startDate, endDate };
             fetchData(1, appliedFilters);
             displayFilterBadges(appliedFilters);
@@ -291,7 +292,7 @@
         });
 
         // Event Listener for changing the page size.
-        document.getElementById('pageSizeSelector').addEventListener('click', function (e) {
+        document.getElementById('pageSizeSelector').addEventListener('change', function (e) {
             pageSize = parseInt(e.target.value);
             fetchData(currentPage, appliedFilters);
         });
