@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 10px 20px;
+}
+
+.parent {
+    width: 100%;
+    height: 80px;
+    background-color: lightgray;
+    display: flex;
+    align-items: center;
+    padding: 0px 6px;
+}
+
+.child1 {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.child1 a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.child1 a:hover {
+    color: #ff5733;
+    text-decoration: underline;
+}
+
+.child2 img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 40px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
