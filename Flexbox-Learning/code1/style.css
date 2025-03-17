@@ -1,6 +1,9 @@
 * {
     margin: 0;
     padding: 0;
+    /* Remove the following property (box-sizing) in order to see how the effct of increasing the left an dright padding of 
+    .parent element will increase the .preant width.*/
+    box-sizing: border-box;
 }
 
 body {
