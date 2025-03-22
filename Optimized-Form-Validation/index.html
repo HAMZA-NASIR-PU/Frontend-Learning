@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Form</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Employee Registration Form</h2>
+        <form id="employeeForm" class="needs-validation" novalidate>
+
+            <div class="mb-3">
+                <label for="fullName" class="form-label">Full Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="fullName" required>
+                <div class="error-message" id="fullNameError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="employeeId" class="form-label">Employee ID <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="employeeId" required>
+                <div class="error-message" id="employeeIdError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="email" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="phoneNumber">
+                <div class="error-message" id="phoneNumberError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="department" required>
+                <div class="error-message" id="departmentError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="designation" class="form-label">Designation <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="designation" required>
+                <div class="error-message" id="designationError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="dateOfJoining" class="form-label">Date of Joining <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="dateOfJoining" required>
+                <div class="error-message" id="dateOfJoiningError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address">
+                <div class="error-message" id="addressError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="emergencyContact" class="form-label">Emergency Contact <span
+                        class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="emergencyContact" required>
+                <div class="error-message" id="emergencyContactError"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="profilePicture" class="form-label">Profile Picture</label>
+                <input type="file" class="form-control" id="profilePicture">
+                <div class="error-message" id="profilePictureError"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Validation logic
+        const formFields = {
+            fullName: { required: true, validator: validateRequiredField, errorMessage: 'Full Name is required' },
+            employeeId: { required: true, validator: validateRequiredField, errorMessage: 'Employee ID is required' },
+            email: { required: true, validator: validateEmail, errorMessage: 'Invalid email address' },
+            phoneNumber: { required: false, validator: validatePhoneNumber, errorMessage: 'Invalid phone number' },
+            department: { required: true, validator: validateRequiredField, errorMessage: 'Department is required' },
+            designation: { required: true, validator: validateRequiredField, errorMessage: 'Designation is required' },
+            dateOfJoining: { required: true, validator: validateRequiredField, errorMessage: 'Date of Joining is required' },
+            emergencyContact: { required: true, validator: validatePhoneNumber, errorMessage: 'Emergency Contact is required' }
+        };
+
+        const fieldElements = Object.keys(formFields).reduce((acc, fieldId) => {
+            acc[fieldId] = document.getElementById(fieldId);
+            acc[`${fieldId}Error`] = document.getElementById(`${fieldId}Error`);
+            return acc;
+        }, {});
+
+        function validateRequiredField(value) {
+            return value.trim() !== '';
+        }
+
+        function validateEmail(value) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(value);
+        }
+
+        function validatePhoneNumber(value) {
+            const re = /^[0-9]{10}$/;
+            return re.test(value);
+        }
+
+        function validateField(fieldId, fieldConfig) {
+            const fieldValue = fieldElements[fieldId].value;
+            if (fieldConfig.required && !fieldConfig.validator(fieldValue)) {
+                return { isValid: false, message: fieldConfig.errorMessage };
+            }
+            return { isValid: true };
+        }
+
+        function handleError(elementId, message = '') {
+            const errorElement = fieldElements[elementId];
+            if (message) {
+                errorElement.innerText = message;
+                errorElement.style.display = 'block';
+            } else {
+                errorElement.innerText = '';
+                errorElement.style.display = 'none';
+            }
+        }
+
+        function validateForm() {
+            let isValid = true;
+            Object.keys(formFields).forEach(fieldId => {
+                const result = validateField(fieldId, formFields[fieldId]);
+                handleError(`${fieldId}Error`, result.isValid ? '' : result.message);
+                if (!result.isValid) isValid = false;
+            });
+            return isValid;
+        }
+
+        document.getElementById('employeeForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (validateForm()) {
+                // Proceed with form submission
+                alert("Form is valid and submitted!");
+            } else {
+                alert("Please fix the errors in the form");
+            }
+        });
+    </script>
+
+</body>
+
+</html>
