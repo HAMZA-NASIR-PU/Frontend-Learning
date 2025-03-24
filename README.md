@@ -198,3 +198,23 @@ To make your sidebar adapt to the content's height, we need a more flexible appr
 * Flexbox makes the sidebar stretch to the full height of it's parent.
 
 By combining `min-height: 100vh` and Flexbox, you create a sidebar that adapts beautifully to your dynamic content!
+
+---
+
+## **📏 `height: 100vh` vs. `min-height: 100vh` – What's the Key Difference? 🧐**   
+
+The difference between `height: 100vh` and `min-height: 100vh` lies in how they handle content overflow:
+
+1. **`height: 100vh`**  
+   - It forces the element to always be exactly **100% of the viewport height**.  
+   - If the content inside the element is **smaller**, the element still takes the full viewport height.  
+   - If the content is **larger**, the content might **overflow** and require scrolling.
+
+2. **`min-height: 100vh`**  
+   - It ensures the element is **at least** 100% of the viewport height.  
+   - If the content inside is **smaller**, it behaves just like `height: 100vh` and takes the full viewport height.  
+   - If the content is **larger**, the element expands beyond the viewport, **allowing it to grow dynamically** instead of causing overflow.
+
+### When to Use Each?
+- Use **`height: 100vh`** when you want a fixed full-screen height, such as a **fullscreen hero section**.
+- Use **`min-height: 100vh`** when you want a section that is **at least** full-screen but can grow with content, such as a **dashboard or webpage layout**.
