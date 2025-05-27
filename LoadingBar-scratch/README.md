@@ -1,0 +1,1 @@
+This example helps me in learning that the child block-level element inherits the width of its parent element but not the height.

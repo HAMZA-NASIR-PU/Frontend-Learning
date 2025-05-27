@@ -1,0 +1,121 @@
+.text-grey-soft {
+    color: #59585a !important;
+}
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.font-weight-normal {
+    font-weight: 400 !important;
+}
+
+.btn-flat-left-grey {
+    color: #212529;
+    background-color: #ededed;
+    border-color: #59585a;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-icon.btn-sm svg:first-child:last-child,
+.form-sm .trix-dialog__link-fields .btn-icon.trix-button svg:first-child:last-child,
+trix-toolbar .trix-dialog--link .btn-icon.trix-button svg:first-child:last-child,
+.ProseMirror span.btn-icon.text-editor--product-access-submission svg:first-child:last-child,
+.advanced-link--input .btn-sm.advanced-link--input--type-button svg:first-child:last-child,
+.advanced-link--input .form-sm .trix-dialog__link-fields .advanced-link--input--type-button.trix-button svg:first-child:last-child,
+.form-sm .trix-dialog__link-fields .advanced-link--input .advanced-link--input--type-button.trix-button svg:first-child:last-child,
+.advanced-link--input trix-toolbar .trix-dialog--link .advanced-link--input--type-button.trix-button svg:first-child:last-child,
+trix-toolbar .trix-dialog--link .advanced-link--input .advanced-link--input--type-button.trix-button svg:first-child:last-child,
+.advanced-link--input .ProseMirror span.advanced-link--input--type-button.text-editor--product-access-submission svg:first-child:last-child,
+.ProseMirror .advanced-link--input span.advanced-link--input--type-button.text-editor--product-access-submission svg:first-child:last-child,
+.unsplash-search .input-group-append .btn-icon.close-btn svg:first-child:last-child,
+.unsplash-search .input-group-append .advanced-link--input .close-btn.advanced-link--input--type-button svg:first-child:last-child,
+.advanced-link--input .unsplash-search .input-group-append .close-btn.advanced-link--input--type-button svg:first-child:last-child,
+.option-group-sm .option-icon svg:first-child:last-child,
+.option-group-sm .btn-icon.option svg:first-child:last-child,
+.option-group-sm .advanced-link--input .option.advanced-link--input--type-button svg:first-child:last-child,
+.advanced-link--input .option-group-sm .option.advanced-link--input--type-button svg:first-child:last-child,
+.option-group-xs .btn-sm.option-icon svg:first-child:last-child,
+.option-group-xs .form-sm .trix-dialog__link-fields .option-icon.trix-button svg:first-child:last-child,
+.form-sm .trix-dialog__link-fields .option-group-xs .option-icon.trix-button svg:first-child:last-child,
+.option-group-xs trix-toolbar .trix-dialog--link .option-icon.trix-button svg:first-child:last-child,
+trix-toolbar .trix-dialog--link .option-group-xs .option-icon.trix-button svg:first-child:last-child,
+.option-group-xs .ProseMirror span.option-icon.text-editor--product-access-submission svg:first-child:last-child,
+.ProseMirror .option-group-xs span.option-icon.text-editor--product-access-submission svg:first-child:last-child,
+.option-group-xs .unsplash-search .input-group-append .option-icon.close-btn svg:first-child:last-child,
+.unsplash-search .input-group-append .option-group-xs .option-icon.close-btn svg:first-child:last-child,
+.option-group-md .btn-sm.option-icon svg:first-child:last-child,
+.option-group-md .form-sm .trix-dialog__link-fields .option-icon.trix-button svg:first-child:last-child,
+.form-sm .trix-dialog__link-fields .option-group-md .option-icon.trix-button svg:first-child:last-child,
+.option-group-md trix-toolbar .trix-dialog--link .option-icon.trix-button svg:first-child:last-child,
+trix-toolbar .trix-dialog--link .option-group-md .option-icon.trix-button svg:first-child:last-child,
+.option-group-md .ProseMirror span.option-icon.text-editor--product-access-submission svg:first-child:last-child,
+.ProseMirror .option-group-md span.option-icon.text-editor--product-access-submission svg:first-child:last-child,
+.option-group-md .unsplash-search .input-group-append .option-icon.close-btn svg:first-child:last-child,
+.unsplash-search .input-group-append .option-group-md .option-icon.close-btn svg:first-child:last-child,
+.btn-group-sm>.btn-icon.btn svg:first-child:last-child,
+.advanced-link--input .btn-group-sm>.advanced-link--input--type-button svg:first-child:last-child,
+.option-group-xs .btn-group-sm>.btn.option-icon svg:first-child:last-child,
+.option-group-xs .btn-group-sm>.btn-icon.option svg:first-child:last-child,
+.option-group-xs .btn-group-sm>.option.option-icon svg:first-child:last-child,
+.option-group-md .btn-group-sm>.btn.option-icon svg:first-child:last-child,
+.option-group-md .btn-group-sm>.btn-icon.option svg:first-child:last-child,
+.option-group-md .btn-group-sm>.option.option-icon svg:first-child:last-child {
+    margin: 0.25rem -0.25rem;
+}
+
+.btn-icon.btn-sm svg,
+.form-sm .trix-dialog__link-fields .btn-icon.trix-button svg,
+trix-toolbar .trix-dialog--link .btn-icon.trix-button svg,
+.ProseMirror span.btn-icon.text-editor--product-access-submission svg,
+.advanced-link--input .btn-sm.advanced-link--input--type-button svg,
+.advanced-link--input .form-sm .trix-dialog__link-fields .advanced-link--input--type-button.trix-button svg,
+.form-sm .trix-dialog__link-fields .advanced-link--input .advanced-link--input--type-button.trix-button svg,
+.advanced-link--input trix-toolbar .trix-dialog--link .advanced-link--input--type-button.trix-button svg,
+trix-toolbar .trix-dialog--link .advanced-link--input .advanced-link--input--type-button.trix-button svg,
+.advanced-link--input .ProseMirror span.advanced-link--input--type-button.text-editor--product-access-submission svg,
+.ProseMirror .advanced-link--input span.advanced-link--input--type-button.text-editor--product-access-submission svg,
+.unsplash-search .input-group-append .btn-icon.close-btn svg,
+.unsplash-search .input-group-append .advanced-link--input .close-btn.advanced-link--input--type-button svg,
+.advanced-link--input .unsplash-search .input-group-append .close-btn.advanced-link--input--type-button svg,
+.option-group-sm .option-icon svg,
+.option-group-sm .btn-icon.option svg,
+.option-group-sm .advanced-link--input .option.advanced-link--input--type-button svg,
+.advanced-link--input .option-group-sm .option.advanced-link--input--type-button svg,
+.option-group-xs .btn-sm.option-icon svg,
+.option-group-xs .form-sm .trix-dialog__link-fields .option-icon.trix-button svg,
+.form-sm .trix-dialog__link-fields .option-group-xs .option-icon.trix-button svg,
+.option-group-xs trix-toolbar .trix-dialog--link .option-icon.trix-button svg,
+trix-toolbar .trix-dialog--link .option-group-xs .option-icon.trix-button svg,
+.option-group-xs .ProseMirror span.option-icon.text-editor--product-access-submission svg,
+.ProseMirror .option-group-xs span.option-icon.text-editor--product-access-submission svg,
+.option-group-xs .unsplash-search .input-group-append .option-icon.close-btn svg,
+.unsplash-search .input-group-append .option-group-xs .option-icon.close-btn svg,
+.option-group-md .btn-sm.option-icon svg,
+.option-group-md .form-sm .trix-dialog__link-fields .option-icon.trix-button svg,
+.form-sm .trix-dialog__link-fields .option-group-md .option-icon.trix-button svg,
+.option-group-md trix-toolbar .trix-dialog--link .option-icon.trix-button svg,
+trix-toolbar .trix-dialog--link .option-group-md .option-icon.trix-button svg,
+.option-group-md .ProseMirror span.option-icon.text-editor--product-access-submission svg,
+.ProseMirror .option-group-md span.option-icon.text-editor--product-access-submission svg,
+.option-group-md .unsplash-search .input-group-append .option-icon.close-btn svg,
+.unsplash-search .input-group-append .option-group-md .option-icon.close-btn svg,
+.btn-group-sm>.btn-icon.btn svg,
+.advanced-link--input .btn-group-sm>.advanced-link--input--type-button svg,
+.option-group-xs .btn-group-sm>.btn.option-icon svg,
+.option-group-xs .btn-group-sm>.btn-icon.option svg,
+.option-group-xs .btn-group-sm>.option.option-icon svg,
+.option-group-md .btn-group-sm>.btn.option-icon svg,
+.option-group-md .btn-group-sm>.btn-icon.option svg,
+.option-group-md .btn-group-sm>.option.option-icon svg {
+    max-width: 1rem;
+    max-height: 1rem;
+}

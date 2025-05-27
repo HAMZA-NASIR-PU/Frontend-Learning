@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Comment Box</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            line-height: 1.6;
+        }
+
+        .comment-box {
+            position: absolute;
+            background: yellow;
+            padding: 5px;
+            border: 1px solid black;
+            z-index: 1000;
+        }
+
+        #comments-section {
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 2px solid black;
+        }
+
+        .comment-item {
+            background: #f4f4f4;
+            padding: 5px;
+            margin: 5px 0;
+            border-left: 5px solid #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Floating Comment Box Demo</h1>
+    <p>
+        This is a simple paragraph of text that you can highlight to test the floating comment system.
+        Try selecting some words in this paragraph and see if a comment box appears!
+        The goal is to allow users to annotate text dynamically.
+    </p>
+
+    <p>
+        Document collaboration tools often provide annotation features, allowing users to comment on specific parts
+        of a document. This project replicates that idea using JavaScript’s <code>document.createElement</code>
+        and <code>window.getSelection()</code>.
+    </p>
+
+    <h2>Saved Comments:</h2>
+    <div id="comments-section">
+        <p>No comments yet.</p>
+    </div>
+
+    <script>
+        let commentsArray = [];
+
+        document.addEventListener("mouseup", function (event) {
+            let selectedText = window.getSelection().toString().trim();
+            if (selectedText) {
+                let range = window.getSelection().getRangeAt(0);
+                let rect = range.getBoundingClientRect();
+
+                let commentBox = document.createElement("div");
+                commentBox.className = "comment-box";
+                commentBox.style.left = `${rect.left + window.scrollX}px`;
+                commentBox.style.top = `${rect.bottom + window.scrollY + 5}px`;
+
+                let input = document.createElement("input");
+                input.type = "text";
+                input.placeholder = "Add a comment...";
+
+                let saveBtn = document.createElement("button");
+                saveBtn.textContent = "Save";
+
+                saveBtn.onclick = function () {
+                    let commentText = input.value.trim();
+                    if (commentText) {
+                        commentsArray.push({ text: selectedText, comment: commentText });
+                        updateCommentsSection();
+                        document.body.removeChild(commentBox);
+                    } else {
+                        alert("Please enter a comment.");
+                    }
+                };
+
+                commentBox.appendChild(input);
+                commentBox.appendChild(saveBtn);
+                document.body.appendChild(commentBox);
+            }
+        });
+
+        function updateCommentsSection() {
+            let commentsSection = document.getElementById("comments-section");
+            commentsSection.innerHTML = ""; // Clear previous content
+
+            if (commentsArray.length === 0) {
+                commentsSection.innerHTML = "<p>No comments yet.</p>";
+                return;
+            }
+
+            commentsArray.forEach((item, index) => {
+                let commentDiv = document.createElement("div");
+                commentDiv.className = "comment-item";
+                commentDiv.innerHTML = `<strong>${item.text}:</strong> ${item.comment}`;
+                commentsSection.appendChild(commentDiv);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

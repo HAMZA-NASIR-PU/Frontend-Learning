@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Events Concept</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            line-height: 1.6;
+        }
+
+        .red-box {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            pointer-events: none;
+            /* Prevent interference with clicks */
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <script>
+        let isMouseDown = false;
+
+        document.addEventListener("mousedown", function (e) {
+            isMouseDown = true;
+            createBox(e);
+        });
+
+        document.addEventListener("mouseup", function () {
+            isMouseDown = false;
+        });
+
+        document.addEventListener("mousemove", function (e) {
+            if (isMouseDown) {
+                createBox(e);
+            }
+        });
+
+        function createBox(e) {
+            const div = document.createElement('div');
+            div.classList.add('red-box');
+            div.style.top = `${e.clientY}px`;
+            div.style.left = `${e.clientX}px`;
+            document.body.appendChild(div);
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<div class="container mt-4">
+  <h1>Event Data Table</h1>
+
+  <!-- Filter Button -->
+  <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#filterModal">
+    Apply Filters
+  </button>
+
+  <!-- Badge Container for Filters -->
+  <div id="filter-badges" class="mb-3">
+    <span *ngFor="let key of Object.keys(filters()); let value = filters()[key]" class="badge bg-primary me-2">
+      {{ key | titlecase }}: {{ value }}
+      <button class="btn-close btn-close-white ms-2" aria-label="Remove"
+        (click)="applyFilter({ ...filters(), [key]: undefined })"></button>
+    </span>
+  </div>
+
+  <!-- Data Table -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Event Title</th>
+        <th>Location</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of paginatedEvents(); trackBy: trackById">
+        <td>{{ event.id }}</td>
+        <td>{{ event.title }}</td>
+        <td>{{ event.location }}</td>
+        <td>{{ event.startDate }}</td>
+        <td>{{ event.endDate }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination and Page Size Selector -->
+  <div class="d-flex justify-content-between align-items-center">
+    <!-- Pagination -->
+    <nav class="flex-grow-1">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage() === 1">
+          <a class="page-link" href="#" (click)="goToPage(1)">First</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage() === 1">
+          <a class="page-link" href="#" (click)="goToPage(currentPage() - 1)">Previous</a>
+        </li>
+
+        <li *ngFor="let i of getPageNumbers(); trackBy: trackById" class="page-item"
+          [class.active]="i === currentPage()">
+          <a class="page-link" href="#" (click)="goToPage(i)">{{ i }}</a>
+        </li>
+
+        <li class="page-item" [class.disabled]="currentPage() === getTotalPages()">
+          <a class="page-link" href="#" (click)="goToPage(currentPage() + 1)">Next</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage() === getTotalPages()">
+          <a class="page-link" href="#" (click)="goToPage(getTotalPages())">Last</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Page Size Selector -->
+    <select class="form-select w-auto ms-3" (change)="changePageSize($event.target.value)">
+      <option *ngFor="let size of [5, 10, 15]" [value]="size" [selected]="pageSize() === size">{{ size }}</option>
+    </select>
+  </div>
+</div>
+
+<!-- Filter Modal -->
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="filterModalLabel">Apply Filters</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Event Title</label>
+            <input type="text" class="form-control" [(ngModel)]="filters().title" name="filterTitle">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Event Location</label>
+            <input type="text" class="form-control" [(ngModel)]="filters().location" name="filterLocation">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Start Date</label>
+            <input type="date" class="form-control" [(ngModel)]="filters().startDate" name="filterStartDate">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">End Date</label>
+            <input type="date" class="form-control" [(ngModel)]="filters().endDate" name="filterEndDate">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="applyFilter(filters())">Apply Filters</button>
+      </div>
+    </div>
+  </div>
+</div>

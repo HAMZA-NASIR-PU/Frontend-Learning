@@ -97,23 +97,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Validation logic
-        const formFields = {
-            fullName: { required: true, validator: validateRequiredField, errorMessage: 'Full Name is required' },
-            employeeId: { required: true, validator: validateRequiredField, errorMessage: 'Employee ID is required' },
-            email: { required: true, validator: validateEmail, errorMessage: 'Invalid email address' },
-            phoneNumber: { required: false, validator: validatePhoneNumber, errorMessage: 'Invalid phone number' },
-            department: { required: true, validator: validateRequiredField, errorMessage: 'Department is required' },
-            designation: { required: true, validator: validateRequiredField, errorMessage: 'Designation is required' },
-            dateOfJoining: { required: true, validator: validateRequiredField, errorMessage: 'Date of Joining is required' },
-            emergencyContact: { required: true, validator: validatePhoneNumber, errorMessage: 'Emergency Contact is required' }
-        };
 
-        const fieldElements = Object.keys(formFields).reduce((acc, fieldId) => {
-            acc[fieldId] = document.getElementById(fieldId);
-            acc[`${fieldId}Error`] = document.getElementById(`${fieldId}Error`);
-            return acc;
-        }, {});
+        // validation.js start
 
         function validateRequiredField(value) {
             return value.trim() !== '';
@@ -130,12 +115,41 @@
         }
 
         function validateField(fieldId, fieldConfig) {
-            const fieldValue = fieldElements[fieldId].value;
+            const fieldValue = fieldElements[fieldId].value.trim();
+
+            // If the field is required and empty, show error
             if (fieldConfig.required && !fieldConfig.validator(fieldValue)) {
+                return { isValid: false, message: fieldConfig.errorMessage };
+            }
+
+            // If the field is optional but has a value, validate it
+            if (!fieldConfig.required && fieldValue !== '' && !fieldConfig.validator(fieldValue)) {
                 return { isValid: false, message: fieldConfig.errorMessage };
             }
             return { isValid: true };
         }
+
+        // validation.js end
+
+
+        // formHandler.js start
+
+        const formFields = {
+            fullName: { required: true, validator: validateRequiredField, errorMessage: 'Full Name is required' },
+            employeeId: { required: true, validator: validateRequiredField, errorMessage: 'Employee ID is required' },
+            email: { required: true, validator: validateEmail, errorMessage: 'Invalid email address' },
+            phoneNumber: { required: false, validator: validatePhoneNumber, errorMessage: 'Invalid phone number' },
+            department: { required: true, validator: validateRequiredField, errorMessage: 'Department is required' },
+            designation: { required: true, validator: validateRequiredField, errorMessage: 'Designation is required' },
+            dateOfJoining: { required: true, validator: validateRequiredField, errorMessage: 'Date of Joining is required' },
+            emergencyContact: { required: true, validator: validatePhoneNumber, errorMessage: 'Emergency Contact is required' }
+        };
+
+        const fieldElements = Object.keys(formFields).reduce((acc, fieldId) => {
+            acc[fieldId] = document.getElementById(fieldId);
+            acc[`${fieldId}Error`] = document.getElementById(`${fieldId}Error`);
+            return acc;
+        }, {});
 
         function handleError(elementId, message = '') {
             const errorElement = fieldElements[elementId];
@@ -158,13 +172,15 @@
             return isValid;
         }
 
+        // formHandler.js end
+
         document.getElementById('employeeForm').addEventListener('submit', function (e) {
             e.preventDefault();
             if (validateForm()) {
                 // Proceed with form submission
                 alert("Form is valid and submitted!");
             } else {
-                alert("Please fix the errors in the form");
+                //alert("Please fix the errors in the form");
             }
         });
     </script>
