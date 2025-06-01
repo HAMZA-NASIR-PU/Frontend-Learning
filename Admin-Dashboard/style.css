@@ -298,6 +298,7 @@ body {
 .sub-menu-link:hover p {
     font-weight: 600;
 }
+
 /* ------------------- PROFILE MENU DROPDOWN END -------------------- */
 
 /* ------------------- TOASTER -------------------- */
@@ -521,4 +522,32 @@ body {
 
 .messages-dropdown-message {
     margin-top: 4px;
+}
+
+
+/* ------------------- HEADER SEARCH BAR -------------------- */
+
+.header-left {
+    position: relative;
+}
+
+.header-left input {
+    border: 1px solid black;
+    border-radius: 16px;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    padding: 8px 30px;
+    transition: background-color 0.3s ease;
+}
+
+.header-left input:hover,
+.header-left input:focus {
+    background-color: #e6e8ed;
+}
+
+#header-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 5px;
 }
