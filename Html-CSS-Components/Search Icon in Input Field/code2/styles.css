@@ -1,0 +1,21 @@
+.search-container {
+    margin: 0 auto;
+    width: fit-content;
+    position: relative;
+}
+
+.search-container input {
+    outline: none;
+    width: 300px;
+    background: transparent;
+    border-radius: 25px;
+    border: 1px solid black;
+    padding: 10px 25px;
+}
+
+.search-container i {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
