@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search Icon inside the text box</title>
+</head>
+<style>
+    .div1 .my-input-1 {
+        padding: 4px 10px 4px 40px;
+    }
+
+    .div1 #searchIcon {
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        z-index: 50;
+        cursor: pointer;
+    }
+
+    .div2 .my-input-1 {
+        padding: 4px 40px 4px 10px;
+    }
+
+    .div2 #searchIcon2 {
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+        z-index: 50;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <div class="div1" style="position: relative;">
+        <svg id="searchIcon" class="icon" ng-reflect-content="512 512,<path fill='var(--ci-p" viewBox="0 0 512 512"
+            xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <path fill="var(--ci-primary-color, currentColor)"
+                d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"
+                class="ci-primary"></path>
+        </svg>
+        <input class="my-input-1" type="text" value="HELLO WORLD" />
+    </div>
+    <span id="searchIconSpan" style="display: none;">Search icon is clicked.</span>
+
+    <br />
+    <br />
+
+    <div class="div2" style="position: relative;width: fit-content;">
+        <svg id="searchIcon2" class="icon" ng-reflect-content="512 512,<path fill='var(--ci-p" viewBox="0 0 512 512"
+            xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <path fill="var(--ci-primary-color, currentColor)"
+                d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"
+                class="ci-primary"></path>
+        </svg>
+        <input class="my-input-1" type="text" value="HELLO WORLD2" />
+    </div>
+
+
+
+    <script type="text/javascript">
+
+        document.getElementById("searchIcon").addEventListener("click", function () {
+            document.getElementById("searchIconSpan").style.display = "block";
+        });
+
+
+    </script>
+</body>
+
+</html>
