@@ -32,7 +32,7 @@ body {
   transition: all 1s ease;
   transform-origin: left;
   transform-style: preserve-3d;
-  backface-visibility: hidden;
+  /* backface-visibility: hidden; Stop using backface-visibility property on parent element */
 }
 .container #flip:checked ~ .cover {
   transform: rotateY(-180deg);
@@ -47,6 +47,7 @@ body {
   left: 0;
   height: 100%;
   width: 100%;
+  backface-visibility: hidden;
 }
 .cover .back {
   transform: rotateY(180deg);
