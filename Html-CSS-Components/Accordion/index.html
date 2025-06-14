@@ -17,7 +17,8 @@
       }
 
       body {
-        height: 100vh;
+        /* height: 100vh; */ /*  Do not use that, otherwise the secordion accordion body will hide the top and bottom accordion when the second accordion is opened */
+        min-height: 100vh;
         background: #90ee90;
         display: flex;
         justify-content: center;
@@ -68,16 +69,25 @@
       }
 
       .accordion-body {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.4s ease, padding 0.3s ease;
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 500ms;
         background: #fff;
-        padding: 0 10px;
+      }
+
+      .accordion-body > div {
+        overflow: hidden;
+      }
+
+      .accordion-body > div > p {
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
       }
 
       .accordion input[type="checkbox"]:checked ~ .accordion-body {
-        max-height: 2000px; /* estimated max height */
-        padding: 10px;
+        grid-template-rows: 1fr;
       }
     </style>
   </head>
@@ -90,44 +100,70 @@
           <i class="fa-solid fa-chevron-down"></i>
         </label>
         <div class="accordion-body">
-          <p>
-            HELLO, and welcome to my accordion lecture. This is some additional
-            content to test smooth expand and collapse animation.
-          </p>
+          <div>
+            <p>
+              HELLO, and welcome to my accordion lecture. This is some
+              additional content to test smooth expand and collapse animation.
+            </p>
+          </div>
         </div>
       </div>
 
       <div class="accordion">
         <input type="checkbox" id="menu-2" />
         <label class="accordion-menu" for="menu-2">
-          <span>Menu 1</span>
+          <span>Menu 2</span>
           <i class="fa-solid fa-chevron-down"></i>
         </label>
         <div class="accordion-body">
-          <p>
-            HELLO, and welcome to my accordion lecture. This is some additional
-            content to test smooth expand and collapse animation.
-          </p>
+          <div>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Cupiditate deleniti dignissimos in est aliquid provident aliquam
+              et blanditiis pariatur eum possimus, iure, fuga voluptatibus id
+              atque dolores repellendus. Tempora, ducimus.
+            </p>
+            <p>
+              Praesentium similique, voluptatum alias iusto a modi at voluptates
+              hic delectus magnam architecto saepe mollitia iure consequuntur
+              earum temporibus eveniet porro nobis dolor, facilis placeat
+              perspiciatis! Minus labore ea omnis!
+            </p>
+            <p>
+              Voluptates, nesciunt saepe maiores adipisci ipsa iure veritatis
+              error, in possimus architecto eos sequi quasi! Excepturi cumque
+              voluptatem ab ratione? Possimus atque quisquam aut expedita
+              molestiae id. Explicabo, voluptates magnam?
+            </p>
+            <p>
+              Deserunt, exercitationem. Tenetur, fugit pariatur. Voluptatibus
+              sint cupiditate maxime similique quae quam officia voluptas
+              asperiores esse sunt! Nisi obcaecati harum culpa magni est, ipsum
+              ea excepturi, voluptatem assumenda, itaque quia?
+            </p>
+            <p>
+              Quo saepe placeat porro, molestias iste perferendis est temporibus
+              ipsa totam libero voluptas! Necessitatibus eius dolorem corporis
+              dolorum, unde assumenda dicta esse. Possimus minima id voluptate
+              atque unde perspiciatis dignissimos.
+            </p>
+          </div>
         </div>
       </div>
 
       <div class="accordion">
         <input type="checkbox" id="menu-3" />
         <label class="accordion-menu" for="menu-3">
-          <span>Menu 1</span>
+          <span>Menu 3</span>
           <i class="fa-solid fa-chevron-down"></i>
         </label>
         <div class="accordion-body">
-          <p>
-            HELLO, and welcome to my accordion lecture. This is some additional
-            content to test smooth expand and collapse animation.HELLO, and
-            welcome to my accordion lecture. This is some additional content to
-            test smooth expand and collapse animation.HELLO, and welcome to my
-            accordion lecture. This is some additional content to test smooth
-            expand and collapse animation.HELLO, and welcome to my accordion
-            lecture. This is some additional content to test smooth expand and
-            collapse animation.
-          </p>
+          <div>
+            <p>
+              HELLO, and welcome to my accordion lecture. This is some
+              additional content to test smooth expand and collapse animation.
+            </p>
+          </div>
         </div>
       </div>
     </div>
