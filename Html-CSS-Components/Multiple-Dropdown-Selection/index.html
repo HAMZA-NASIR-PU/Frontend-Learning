@@ -6,12 +6,10 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>Multiple-Dropdown-Selection HTML/CSS</title>
-
+    <title>Multiselect Dropdown Advanced</title>
     <style>
       * {
         margin: 0;
@@ -25,6 +23,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        font-family: sans-serif;
       }
 
       .container {
@@ -35,220 +34,292 @@
         position: relative;
       }
 
-      .container .selected-items-label {
-        display: flex;
-        justify-content: space-between;
+      .selected-items-header {
+        display: grid;
+        grid-template-columns: 1fr auto;
         align-items: center;
+        gap: 10px;
+        border-radius: 1rem;
+        padding: 5px;
+        cursor: pointer;
       }
 
-      .container .selected-items-label:hover {
+      .selected-items-header:hover {
         background: #e0e0e0;
       }
 
-      .selected-items-label > i {
-        transition: transform 1s ease;
+      .rotate {
+        transform: rotate(180deg);
+        transition: transform 0.3s ease;
+      }
+
+      .fa-chevron-down {
+        transition: transform 0.3s ease;
       }
 
       .selected-item-list {
-        min-height: 40px;
-        flex: 1;
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        align-items: center;
-      }
-
-      input[type="checkbox"] {
-        display: none;
-      }
-
-      input[id="open-dropdown"]:checked + label i {
-        transform: rotate(180deg);
-      }
-
-      .user-img {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 8px;
+        margin-top: 10px;
       }
 
       .item-being-selected {
         display: flex;
         align-items: center;
-        width: fit-content;
-        height: fit-content;
-        gap: 10px;
+        gap: 8px;
         background-color: lightblue;
         border-radius: 1rem;
         padding: 2px 8px;
       }
 
-      .item-being-selected .item-being-selected-user {
+      .item-being-selected-user {
         display: flex;
         align-items: center;
-        width: fit-content;
-        height: fit-content;
-        gap: 10px;
-        background-color: lightblue;
-        border-radius: 1rem;
-        padding: 2px 5px;
+        gap: 5px;
+      }
+
+      .user-img {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+      }
+
+      .fa-x {
+        cursor: pointer;
       }
 
       .dropdown-menu {
-        background-color: rgb(230, 219, 219);
+        background-color: #eee;
         position: absolute;
-        width: 500px;
-        height: 0;
-        overflow-y: scroll;
-        transition: all 0.5s ease;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
         top: 110%;
         left: 0;
         border-radius: 1rem;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
+        padding: 0 5px;
+        z-index: 10;
       }
 
-      input[id="open-dropdown"]:checked ~ .dropdown-menu {
-        height: 100px;
-        padding: 3px 5px;
+      .dropdown-menu.open {
+        max-height: 300px;
+        padding: 10px 5px;
+        overflow-y: auto;
       }
 
-      .dropdown-menu input[type="checkbox"] {
-        display: none;
-      }
-
-      .dropdown-menu .dropdown-item {
+      .dropdown-item {
         display: flex;
-        align-items: center;
         justify-content: space-between;
+        align-items: center;
         border-radius: 1rem;
-        padding: 3px 5px;
+        padding: 5px 10px;
         cursor: pointer;
       }
 
-      .dropdown-item:hover {
+      .dropdown-item:hover,
+      .dropdown-item.focused {
         background-color: #88c388;
       }
 
-      .dropdown-menu input[type="checkbox"]:checked + label i {
-        display: block;
+      .dropdown-item .fa-check {
+        display: none;
       }
 
-      .dropdown-menu .dropdown-item i {
-        display: none;
+      .dropdown-item.selected .fa-check {
+        display: inline;
+      }
+
+      .dropdown-user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .dropdown-item img {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+      }
+
+      .dropdown-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 5px;
+      }
+
+      .dropdown-header input {
+        width: 70%;
+        padding: 5px;
+        border: none;
+        border-radius: 5px;
+      }
+
+      .dropdown-header button {
+        padding: 5px 10px;
+        border: none;
+        background: crimson;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .dropdown-header button:hover {
+        background: darkred;
       }
     </style>
   </head>
   <body>
-    <i style="display: none" class="fa-solid fa-chevron-down"></i>
-
     <div class="container">
-      <input type="checkbox" id="open-dropdown" />
-      <label class="selected-items-label" for="open-dropdown">
-        <div class="selected-item-list">
-          <div class="item-being-selected">
-            <div class="item-being-selected-user">
-              <img class="user-img" src="images/avatar1.jpg" alt="John Doe" />
-              <div style="margin: auto 0">John Doe</div>
-            </div>
-            <i class="fa-solid fa-x"></i>
-          </div>
+      <div class="selected-items-header" id="dropdownToggle">
+        <span>Selected Users</span>
+        <i class="fa-solid fa-chevron-down" id="chevronIcon"></i>
+      </div>
 
-          <div class="item-being-selected">
-            <div class="item-being-selected-user">
-              <img class="user-img" src="images/avatar1.jpg" alt="John Doe" />
-              <div style="margin: auto 0">John Doe</div>
-            </div>
-            <i class="fa-solid fa-x"></i>
-          </div>
+      <div class="selected-item-list" id="selectedList"></div>
 
-          <div class="item-being-selected">
-            <div class="item-being-selected-user">
-              <img class="user-img" src="images/avatar1.jpg" alt="John Doe" />
-              <div style="margin: auto 0">John Doe</div>
-            </div>
-            <i class="fa-solid fa-x"></i>
-          </div>
-
-          <div class="item-being-selected">
-            <div class="item-being-selected-user">
-              <img class="user-img" src="images/avatar1.jpg" alt="John Doe" />
-              <div style="margin: auto 0">John Doe</div>
-            </div>
-            <i class="fa-solid fa-x"></i>
-          </div>
+      <div class="dropdown-menu" id="dropdownMenu" tabindex="0">
+        <div class="dropdown-header">
+          <input type="text" id="searchInput" placeholder="Search..." />
+          <button id="clearAllBtn">Clear All</button>
         </div>
-        <i class="fa-solid fa-chevron-down"></i>
-      </label>
-
-      <div class="dropdown-menu">
-        <input type="checkbox" id="item-1" />
-        <label class="dropdown-item" for="item-1">
-          <div style="display: flex; gap: 10px">
-            <img class="user-img" src="images/avatar1.jpg" alt="John Doe" />
-            <div style="margin: auto 0">John Doe</div>
-          </div>
-          <i class="fa-solid fa-check"></i>
-        </label>
-
-        <input type="checkbox" id="item-2" />
-        <label class="dropdown-item" for="item-2">
-          <div style="display: flex; gap: 10px">
-            <img class="user-img" src="images/avatar1.jpg" alt="John Doe" />
-            <div style="margin: auto 0">John Doe</div>
-          </div>
-          <i class="fa-solid fa-check"></i>
-        </label>
-
-        <input type="checkbox" id="item-3" />
-        <label class="dropdown-item" for="item-3">
-          <div style="display: flex; gap: 10px">
-            <img class="user-img" src="images/avatar1.jpg" alt="John Doe" />
-            <div style="margin: auto 0">John Doe</div>
-          </div>
-          <i class="fa-solid fa-check"></i>
-        </label>
-
-        <input type="checkbox" id="item-4" />
-        <label class="dropdown-item" for="item-4">
-          <div style="display: flex; gap: 10px">
-            <img class="user-img" src="images/avatar1.jpg" alt="John Doe" />
-            <div style="margin: auto 0">John Doe</div>
-          </div>
-          <i class="fa-solid fa-check"></i>
-        </label>
+        <div id="dropdownItemsContainer"></div>
       </div>
     </div>
 
     <script>
-      const selectedItemsList = document.querySelector(".selected-item-list");
+      const users = [
+        { id: 1, name: "John Doe", avatar: "images/avatar1.jpg" },
+        { id: 2, name: "Jane Smith", avatar: "images/avatar2.jpg" },
+        { id: 3, name: "Alice Johnson", avatar: "images/avatar1.jpg" },
+        { id: 4, name: "Bob Brown", avatar: "images/avatar2.jpg" },
+        { id: 5, name: "Charlie Adams", avatar: "images/avatar2.jpg" },
+        { id: 6, name: "Diana Ross", avatar: "images/avatar1.jpg" },
+      ];
 
-      var selectedItems = [];
+      const selectedList = document.getElementById("selectedList");
+      const dropdownMenu = document.getElementById("dropdownMenu");
+      const dropdownItemsContainer = document.getElementById(
+        "dropdownItemsContainer"
+      );
+      const chevronIcon = document.getElementById("chevronIcon");
+      const dropdownToggle = document.getElementById("dropdownToggle");
+      const searchInput = document.getElementById("searchInput");
+      const clearAllBtn = document.getElementById("clearAllBtn");
 
-      document
-        .querySelector(".dropdown-menu")
-        .addEventListener("click", (e) => {
-          if (e.target.classList.contains("dropdown-item")) {
-            let forAttribute = e.target.getAttribute("for");
-            // debugger;
-            // document.querySelector(`input[id=${forAttribute}]`).checked;
-            if (selectedItems.includes(forAttribute)) {
-              selectedItems = selectedItems.filter((x) => x !== forAttribute);
-            } else {
-              selectedItems.push(forAttribute);
-            }
+      let selectedIds = new Set();
+      let isDropdownOpen = false;
+      let focusedIndex = -1;
+      let filteredUsers = [...users];
 
-            debugger;
-            console.log(e.target);
-
-            // selectedItemsList.innerHTML = "";
-
-            // selectedItems.forEach(item => {
-              
-            // });
-          }
+      function renderSelectedItems() {
+        selectedList.innerHTML = "";
+        selectedIds.forEach((id) => {
+          const user = users.find((u) => u.id === id);
+          const item = document.createElement("div");
+          item.className = "item-being-selected";
+          item.innerHTML = `
+        <div class="item-being-selected-user">
+          <img class="user-img" src="${user.avatar}" alt="${user.name}" />
+          <div>${user.name}</div>
+        </div>
+        <i class="fa-solid fa-x" data-id="${user.id}"></i>
+      `;
+          selectedList.appendChild(item);
         });
+      }
+
+      function renderDropdownItems() {
+        dropdownItemsContainer.innerHTML = "";
+        filteredUsers.forEach((user, idx) => {
+          const item = document.createElement("div");
+          item.className =
+            "dropdown-item" +
+            (selectedIds.has(user.id) ? " selected" : "") +
+            (idx === focusedIndex ? " focused" : "");
+          item.setAttribute("data-id", user.id);
+          item.setAttribute("data-index", idx);
+          item.innerHTML = `
+        <div class="dropdown-user">
+          <img src="${user.avatar}" alt="${user.name}" />
+          <div>${user.name}</div>
+        </div>
+        <i class="fa-solid fa-check"></i>
+      `;
+          dropdownItemsContainer.appendChild(item);
+        });
+      }
+
+      dropdownToggle.addEventListener("click", (e) => {
+        if (e.target.classList.contains("fa-x")) return;
+        isDropdownOpen = !isDropdownOpen;
+        dropdownMenu.classList.toggle("open", isDropdownOpen);
+        chevronIcon.classList.toggle("rotate", isDropdownOpen);
+        if (isDropdownOpen) {
+          searchInput.focus();
+        }
+      });
+
+      dropdownItemsContainer.addEventListener("click", (e) => {
+        const item = e.target.closest(".dropdown-item");
+        if (!item) return;
+        const id = parseInt(item.getAttribute("data-id"));
+        if (selectedIds.has(id)) selectedIds.delete(id);
+        else selectedIds.add(id);
+        renderSelectedItems();
+        renderDropdownItems();
+      });
+
+      selectedList.addEventListener("click", (e) => {
+        if (!e.target.classList.contains("fa-x")) return;
+        const id = parseInt(e.target.getAttribute("data-id"));
+        selectedIds.delete(id);
+        renderSelectedItems();
+        renderDropdownItems();
+      });
+
+      searchInput.addEventListener("input", (e) => {
+        const term = e.target.value.toLowerCase();
+        filteredUsers = users.filter((u) =>
+          u.name.toLowerCase().includes(term)
+        );
+        focusedIndex = -1;
+        renderDropdownItems();
+      });
+
+      clearAllBtn.addEventListener("click", () => {
+        selectedIds.clear();
+        renderSelectedItems();
+        renderDropdownItems();
+      });
+
+      dropdownMenu.addEventListener("keydown", (e) => {
+        const maxIndex = filteredUsers.length - 1;
+        if (e.key === "ArrowDown") {
+          focusedIndex = focusedIndex < maxIndex ? focusedIndex + 1 : 0;
+        } else if (e.key === "ArrowUp") {
+          focusedIndex = focusedIndex > 0 ? focusedIndex - 1 : maxIndex;
+        } else if (e.key === "Enter") {
+          const user = filteredUsers[focusedIndex];
+          if (user) {
+            if (selectedIds.has(user.id)) selectedIds.delete(user.id);
+            else selectedIds.add(user.id);
+            renderSelectedItems();
+          }
+        } else if (e.key === "Escape") {
+          isDropdownOpen = false;
+          dropdownMenu.classList.remove("open");
+          chevronIcon.classList.remove("rotate");
+        }
+        renderDropdownItems();
+      });
+
+      renderDropdownItems();
     </script>
   </body>
 </html>
