@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select User Dropdown</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 2rem;
+        background: #f8f9fa;
+      }
+
+      .dropdown-container {
+        width: 300px;
+        position: relative;
+      }
+
+      .select-header {
+        width: 100%;
+        background: #fff;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        border-radius: 0.375rem;
+        padding: 0.5rem 0.75rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+      }
+
+      .selected-user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .selected-user img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+      }
+
+      .dropdown-list {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        margin-top: 2px;
+        background: white;
+        z-index: 10;
+        border: 1px solid #ccc;
+        border-radius: 0.375rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .dropdown-list.show {
+        display: flex;
+      }
+
+      .dropdown-list-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0.5rem 0.75rem;
+        cursor: pointer;
+      }
+
+      .dropdown-list-item img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+      }
+
+      .dropdown-list-item:hover {
+        background: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dropdown-container">
+      <label style="margin-bottom: 6px; display: block">Select User</label>
+      <div class="select-header" id="dropdownToggle">
+        <div class="selected-user" id="selectedUser">
+          <span style="color: #888">Select a user</span>
+        </div>
+        ▼
+      </div>
+
+      <div class="dropdown-list" id="dropdownList">
+        <div
+          class="dropdown-list-item"
+          data-name="Alice"
+          data-avatar="https://i.pravatar.cc/150?img=1"
+        >
+          <div class="selected-user">
+            <img src="https://i.pravatar.cc/150?img=1" />
+            <div>Alice</div>
+          </div>
+        </div>
+        <div
+          class="dropdown-list-item"
+          data-name="Bob"
+          data-avatar="https://i.pravatar.cc/150?img=2"
+        >
+          <div class="selected-user">
+            <img src="https://i.pravatar.cc/150?img=2" />
+            <div>Bob</div>
+          </div>
+        </div>
+        <div
+          class="dropdown-list-item"
+          data-name="Charlie"
+          data-avatar="https://i.pravatar.cc/150?img=3"
+        >
+          <div class="selected-user">
+            <img src="https://i.pravatar.cc/150?img=3" />
+            <div>Charlie</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const toggle = document.getElementById("dropdownToggle");
+      const list = document.getElementById("dropdownList");
+      const selected = document.getElementById("selectedUser");
+
+      function matchDropdownWidth() {
+        const width = toggle.getBoundingClientRect().width;
+        list.style.width = `${width}px`;
+      }
+
+      toggle.addEventListener("click", () => {
+        matchDropdownWidth();
+        list.classList.toggle("show");
+      });
+
+      document.querySelectorAll(".dropdown-list-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          const name = item.getAttribute("data-name");
+          const avatar = item.getAttribute("data-avatar");
+
+          selected.innerHTML = `<img src="${avatar}" /><div>${name}</div>`;
+          list.classList.remove("show");
+        });
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".dropdown-container")) {
+          list.classList.remove("show");
+        }
+      });
+
+      // Optional: recalculate on resize
+      window.addEventListener("resize", matchDropdownWidth);
+    </script>
+  </body>
+</html>
